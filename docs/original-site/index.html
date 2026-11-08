@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Byamashop — Robes & tapis de prière, parfums, friperie</title>
+  <meta name="description" content="Byamashop : robes de prière, tapis de prière, parfums, friperie, ensembles, produits du Maroc et d'Alibaba. Livraison à Dakar et partout au Sénégal.">
+  <meta name="theme-color" content="#7C3AED">
+  <meta property="og:title" content="Byamashop">
+  <meta property="og:description" content="Robes & tapis de prière, parfums, friperie, produits du Maroc. Commande facile par WhatsApp.">
+  <meta property="og:image" content="assets/logo.svg">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="topbar">🚚 Livraison à Dakar en 24h · Partout au Sénégal · Paiement Wave, Orange Money ou à la livraison</div>
+
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#accueil" class="logo"><img src="assets/logo.svg" alt="Byamashop"></a>
+      <nav class="nav" id="nav">
+        <a href="#accueil">Accueil</a>
+        <a href="#categories">Catégories</a>
+        <a href="#boutique">Boutique</a>
+        <a href="#apropos">À propos</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn" id="cartBtn" aria-label="Ouvrir le panier">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+          <span class="badge" id="cartCount">0</span>
+        </button>
+        <button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="accueil">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <span class="pill">✨ Nouvelle collection</span>
+          <h1>Élégance, piété & <span class="grad">bonnes affaires</span></h1>
+          <p>Robes et tapis de prière, parfums envoûtants, friperie sélectionnée, ensembles chez Cathy, produits du Maroc et d'Alibaba — tout chez Byamashop.</p>
+          <div class="hero-cta">
+            <a href="#boutique" class="btn btn-primary">Découvrir la boutique</a>
+            <a href="#contact" class="btn btn-ghost">Nous contacter</a>
+          </div>
+          <div class="hero-stats">
+            <div><strong>9</strong><span>catégories</span></div>
+            <div><strong>24h</strong><span>livraison Dakar</span></div>
+            <div><strong>100%</strong><span>satisfaction</span></div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+          <div class="hero-card hc1"><span>🧕</span>Robes de prière</div>
+          <div class="hero-card hc2"><span>🌸</span>Parfums</div>
+          <div class="hero-card hc3"><span>🕌</span>Tapis de prière</div>
+          <img src="assets/logo.svg" alt="" class="hero-logo">
+        </div>
+      </div>
+    </section>
+
+    <!-- AVANTAGES -->
+    <section class="perks container">
+      <div class="perk"><span>🚚</span><div><strong>Livraison rapide</strong><small>Dakar 24h, régions 48–72h</small></div></div>
+      <div class="perk"><span>💳</span><div><strong>Paiement simple</strong><small>Wave, Orange Money, cash</small></div></div>
+      <div class="perk"><span>💬</span><div><strong>Commande WhatsApp</strong><small>Confirmation immédiate</small></div></div>
+      <div class="perk"><span>⭐</span><div><strong>Qualité choisie</strong><small>Produits vérifiés</small></div></div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section class="section" id="categories">
+      <div class="container">
+        <div class="section-head">
+          <h2>Nos catégories</h2>
+          <p>Trouvez facilement ce qu'il vous faut</p>
+        </div>
+        <div class="cat-grid" id="catGrid"></div>
+      </div>
+    </section>
+
+    <!-- BOUTIQUE -->
+    <section class="section section-soft" id="boutique">
+      <div class="container">
+        <div class="section-head">
+          <h2>La boutique</h2>
+          <p>Ajoutez au panier, puis commandez en un clic sur WhatsApp</p>
+        </div>
+        <div class="shop-tools">
+          <div class="search">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+            <input type="search" id="searchInput" placeholder="Rechercher un produit…" aria-label="Rechercher">
+          </div>
+          <select id="sortSelect" aria-label="Trier">
+            <option value="default">Trier : Recommandés</option>
+            <option value="price-asc">Prix croissant</option>
+            <option value="price-desc">Prix décroissant</option>
+            <option value="name">Nom A–Z</option>
+          </select>
+        </div>
+        <div class="filters" id="filters"></div>
+        <div class="product-grid" id="productGrid"></div>
+        <p class="empty" id="emptyMsg" hidden>Aucun produit ne correspond à votre recherche.</p>
+      </div>
+    </section>
+
+    <!-- PROMO -->
+    <section class="promo">
+      <div class="container promo-inner">
+        <div>
+          <h2>Commande groupée ? Revendeurs bienvenus 🤝</h2>
+          <p>Prix spéciaux pour les commandes en gros : tapis, robes, parfums et produits Alibaba.</p>
+        </div>
+        <a href="#" class="btn btn-white" id="wholesaleBtn">Demander un devis</a>
+      </div>
+    </section>
+
+    <!-- A PROPOS -->
+    <section class="section" id="apropos">
+      <div class="container about">
+        <div class="about-visual">
+          <img src="assets/logo.svg" alt="Logo Byamashop">
+        </div>
+        <div>
+          <h2>À propos de Byamashop</h2>
+          <p>Byamashop est une boutique sénégalaise qui réunit l'essentiel de la vie quotidienne et spirituelle : des robes et tapis de prière de qualité, des parfums raffinés, une friperie soigneusement sélectionnée, les ensembles de chez Cathy, la collection Lasalmah, ainsi que des produits importés du Maroc et d'Alibaba.</p>
+          <p>Notre promesse : de beaux produits, des prix justes et un service humain, du premier message jusqu'à la livraison.</p>
+          <ul class="checks">
+            <li>Produits sélectionnés un par un</li>
+            <li>Conseil personnalisé sur WhatsApp</li>
+            <li>Échange possible sous 48h</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section section-soft" id="contact">
+      <div class="container contact">
+        <div>
+          <h2>Contactez-nous</h2>
+          <p>Une question sur un produit, une taille, une commande en gros ? Écrivez-nous.</p>
+          <div class="contact-list">
+            <a href="#" class="contact-item" id="waLink"><span>💬</span><div><strong>WhatsApp</strong><small id="waText"></small></div></a>
+            <a href="#" class="contact-item" id="phoneLink"><span>📞</span><div><strong>Téléphone</strong><small id="phoneText"></small></div></a>
+            <div class="contact-item"><span>📍</span><div><strong>Adresse</strong><small id="addrText"></small></div></div>
+          </div>
+        </div>
+        <form class="card form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/merci.html">
+          <input type="hidden" name="form-name" value="contact">
+          <p hidden><label>Ne pas remplir : <input name="bot-field"></label></p>
+          <label>Nom complet<input name="nom" required></label>
+          <label>Téléphone<input name="telephone" type="tel" required></label>
+          <label>Message<textarea name="message" rows="4" required></textarea></label>
+          <button class="btn btn-primary" type="submit">Envoyer le message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <img src="assets/logo.svg" alt="Byamashop" class="footer-logo">
+        <p>Robes & tapis de prière, parfums, friperie et bien plus. Livraison partout au Sénégal.</p>
+      </div>
+      <div>
+        <h4>Boutique</h4>
+        <div id="footerCats"></div>
+      </div>
+      <div>
+        <h4>Suivez-nous</h4>
+        <div class="socials">
+          <a href="#" id="igLink" aria-label="Instagram">Instagram</a>
+          <a href="#" id="tkLink" aria-label="TikTok">TikTok</a>
+          <a href="#" id="fbLink" aria-label="Facebook">Facebook</a>
+        </div>
+      </div>
+    </div>
+    <div class="copy">© <span id="year"></span> Byamashop — Tous droits réservés</div>
+  </footer>
+
+  <!-- Bouton WhatsApp flottant -->
+  <a href="#" class="wa-float" id="waFloat" aria-label="WhatsApp">
+    <svg viewBox="0 0 32 32" width="30" height="30" fill="#fff"><path d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.9 2 7L3 29l6.4-2c2 1.1 4.3 1.7 6.6 1.7 7.2 0 13-5.7 13-12.8S23.2 3 16 3zm0 23.4c-2.1 0-4.1-.6-5.9-1.7l-.4-.3-3.8 1.2 1.2-3.7-.3-.4C5.6 19.8 5 17.8 5 15.8 5 9.8 9.9 5 16 5s11 4.8 11 10.8-4.9 10.6-11 10.6zm6-7.9c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.7-1.7-1-.9-1.7-2-1.9-2.3-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6l-1-2.5c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.1 2.9 1.1 3.5.9 4.1.9.6-.1 2-.8 2.3-1.6.3-.8.3-1.5.2-1.6-.1-.2-.3-.3-.7-.5z"/></svg>
+  </a>
+
+  <!-- Panier -->
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="cartDrawer" aria-label="Panier">
+    <div class="drawer-head">
+      <h3>Mon panier</h3>
+      <button class="icon-btn" id="closeCart" aria-label="Fermer">✕</button>
+    </div>
+    <div class="drawer-body" id="cartItems"></div>
+    <div class="drawer-foot" id="cartFoot">
+      <div class="row"><span>Sous-total</span><strong id="cartSubtotal">0 FCFA</strong></div>
+      <button class="btn btn-primary btn-block" id="checkoutBtn">Passer la commande</button>
+      <button class="btn btn-link" id="clearCart">Vider le panier</button>
+    </div>
+  </aside>
+
+  <!-- Modale produit -->
+  <div class="modal" id="productModal" aria-hidden="true">
+    <div class="modal-box">
+      <button class="icon-btn modal-close" data-close aria-label="Fermer">✕</button>
+      <div class="modal-content" id="productContent"></div>
+    </div>
+  </div>
+
+  <!-- Modale commande -->
+  <div class="modal" id="checkoutModal" aria-hidden="true">
+    <div class="modal-box modal-narrow">
+      <button class="icon-btn modal-close" data-close aria-label="Fermer">✕</button>
+      <h3>Finaliser ma commande</h3>
+      <p class="muted">Votre commande sera envoyée sur WhatsApp pour confirmation.</p>
+      <form id="checkoutForm" class="form">
+        <label>Nom complet<input name="nom" required></label>
+        <label>Téléphone<input name="telephone" type="tel" required placeholder="76 000 00 00"></label>
+        <label>Zone de livraison
+          <select name="zone" id="zoneSelect" required></select>
+        </label>
+        <label>Adresse / quartier<input name="adresse" required placeholder="Ex : Cambérène, près de la mosquée"></label>
+        <label>Mode de paiement
+          <select name="paiement" required>
+            <option>Wave</option>
+            <option>Orange Money</option>
+            <option>Paiement à la livraison</option>
+          </select>
+        </label>
+        <label>Remarque (optionnel)<textarea name="note" rows="2"></textarea></label>
+        <div class="summary" id="checkoutSummary"></div>
+        <button class="btn btn-primary btn-block" type="submit">Commander sur WhatsApp</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Formulaire caché pour que Netlify enregistre aussi les commandes -->
+  <form name="commande" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input name="nom"><input name="telephone"><input name="zone"><input name="adresse"><input name="paiement"><textarea name="note"></textarea><textarea name="details"></textarea><input name="total"><input name="bot-field">
+  </form>
+
+  <script src="products.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

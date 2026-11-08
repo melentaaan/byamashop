@@ -1,0 +1,104 @@
+/* =====================================================================
+   Byamashop — jetons de design
+   Palette issue du logo d'origine : violet #7C3AED, magenta #C026D3,
+   rose vif #FF6FB5, rehaussée d'une prune profonde pour le texte.
+   ===================================================================== */
+:root {
+  /* Marque */
+  --violet-50: #f6f1ff;
+  --violet-100: #ede4ff;
+  --violet-200: #dccbff;
+  --violet-300: #c4a7fd;
+  --violet-500: #8b5cf6;
+  --violet-600: #7c3aed;   /* violet du logo */
+  --violet-700: #6425d0;
+  --violet-800: #521fa8;
+  --magenta-500: #d43be6;
+  --magenta-600: #c026d3;  /* magenta du logo */
+  --magenta-700: #a01bb0;
+  --pink-100: #ffe4f1;
+  --pink-200: #ffc9e3;
+  --pink-400: #ff6fb5;     /* rose vif du logo */
+  --pink-500: #ec4899;
+  --rose-600: #e11d48;     /* « shop » du logo — usage ponctuel */
+  --plum-950: #1f0a26;
+  --plum-900: #2a0f33;     /* texte principal */
+  --plum-800: #3b1846;
+  --plum-700: #553060;
+  --plum-600: #6e4d78;     /* texte secondaire (AA sur blanc) */
+  --plum-500: #8a6c93;
+
+  /* Surfaces */
+  --white: #ffffff;
+  --paper: #fffbfd;        /* fond général, blanc légèrement rosé */
+  --blush: #fff3f8;        /* rose très pâle */
+  --lilac: #f6f0ff;        /* lilas doux */
+  --lilac-strong: #ece2fb;
+  --line: #eadff0;
+  --line-strong: #d9c8e2;
+
+  /* États */
+  --success: #13795b;
+  --success-bg: #e8f6f0;
+  --warning: #9a5b00;
+  --warning-bg: #fff4dc;
+  --danger: #b4233c;
+  --danger-bg: #fdebee;
+  --info-bg: #f1ebff;
+
+  /* Rôles */
+  --text: var(--plum-900);
+  --text-muted: var(--plum-600);
+  --text-soft: var(--plum-500);
+  --bg: var(--paper);
+  --surface: var(--white);
+  --primary: var(--violet-700);
+  --primary-hover: var(--violet-800);
+  --accent: var(--magenta-600);
+  --focus: var(--magenta-600);
+
+  /* Dégradé de marque — usage parcimonieux (logo, filets, accents) */
+  --brand-gradient: linear-gradient(120deg, var(--pink-400) 0%, var(--magenta-600) 48%, var(--violet-600) 100%);
+  --brand-gradient-soft: linear-gradient(140deg, #fff0f7 0%, #f6efff 60%, #efe6ff 100%);
+
+  /* Typographie */
+  --font-display: 'Fraunces Variable', 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --fs-2xl: clamp(1.6rem, 1.3rem + 1.2vw, 2.25rem);
+  --fs-3xl: clamp(2rem, 1.5rem + 2.2vw, 3.25rem);
+  --fs-hero: clamp(2.5rem, 1.6rem + 4vw, 4.75rem);
+
+  /* Espacements & formes */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --space-9: 6.5rem;
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 1px 2px rgb(42 15 51 / 0.06), 0 1px 1px rgb(42 15 51 / 0.04);
+  --shadow: 0 10px 30px -12px rgb(82 31 168 / 0.18), 0 2px 6px rgb(42 15 51 / 0.05);
+  --shadow-lg: 0 30px 60px -20px rgb(82 31 168 / 0.28), 0 8px 20px -8px rgb(42 15 51 / 0.12);
+
+  --container: 1320px;
+  --gutter: clamp(16px, 3.2vw, 40px);
+  --header-h: 68px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur: 220ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur: 0ms; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}

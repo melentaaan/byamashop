@@ -40,7 +40,7 @@ p { text-wrap: pretty; }
 .eyebrow {
   display: inline-flex; align-items: center; gap: 10px;
   font-family: var(--font-body); font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--accent);
+  color: var(--magenta-700);
 }
 .eyebrow::before { content: ''; width: 22px; height: 1.5px; background: var(--brand-gradient); border-radius: 2px; }
 .eyebrow--plain::before { display: none; }

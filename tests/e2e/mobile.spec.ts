@@ -40,7 +40,7 @@ test('14. administration utilisable sur téléphone', async ({ page }) => {
   await page.getByRole('button', { name: 'Menu d’administration' }).click();
   await page.getByRole('link', { name: 'Produits & stock' }).click();
   await expect(page.getByRole('heading', { name: 'Produits & stock' })).toBeVisible();
-  for (const path of ['/admin', '/admin/produits', '/admin/reglages', '/admin/catalogue']) {
+  for (const path of ['/admin', '/admin/produits', '/admin/produits/nouveau', '/admin/commandes', '/admin/reglages', '/admin/catalogue', '/admin/messages']) {
     await page.goto(path);
     await page.waitForTimeout(300);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);

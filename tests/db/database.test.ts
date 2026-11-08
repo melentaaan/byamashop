@@ -335,3 +335,21 @@ describe('Parité des règles TypeScript / SQL', () => {
     }
   });
 });
+
+describe('Confirmation de paiement par prestataire', () => {
+  it('réservée au serveur, vérifie le montant, idempotente', async () => {
+    const v = await variantOf('nouveau-parfum-test');
+    await db.query('update product_variants set stock = 5 where id = $1', [v.id]);
+    const z = await zone('Dakar (centre & banlieue)');
+    const res = await placeOrder(payload({ zone_id: z.id, items: [{ variant_id: v.id, quantity: 1 }] }));
+    await expect(asRole(db, 'anon', null, `select public.confirm_provider_payment($1, $2, 'XOF', 'Wave', 'T1')`, [res.reference, res.total])).rejects.toThrow(/permission denied/);
+    await expect(asRole(db, 'authenticated', adminId, `select public.confirm_provider_payment($1, $2, 'XOF', 'Wave', 'T1')`, [res.reference, res.total])).rejects.toThrow(/permission denied/);
+    const bad = await db.query(`select public.confirm_provider_payment($1, $2, 'XOF', 'Wave', 'T1') as r`, [res.reference, res.total - 5]);
+    expect(bad.rows[0].r.reason).toBe('amount_mismatch');
+    const ok = await db.query(`select public.confirm_provider_payment($1, $2, 'XOF', 'Wave', 'T1') as r`, [res.reference, res.total]);
+    expect(ok.rows[0].r.ok).toBe(true);
+    const again = await db.query(`select public.confirm_provider_payment($1, $2, 'XOF', 'Wave', 'T1') as r`, [res.reference, res.total]);
+    expect(again.rows[0].r.already_paid).toBe(true);
+    expect((await db.query('select payment_status from orders where reference = $1', [res.reference])).rows[0].payment_status).toBe('paid');
+  });
+});

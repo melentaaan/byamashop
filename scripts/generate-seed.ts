@@ -60,3 +60,15 @@ out.push('commit;');
 const target = join(import.meta.dirname, '..', 'supabase', 'seed.sql');
 writeFileSync(target, out.join('\n\n') + '\n');
 console.log(`seed.sql généré : ${demoProducts.length} produits, ${demoCategories.length} catégories, ${pages.length} pages.`);
+
+// Fichier unique « tout-en-un » pour l'éditeur SQL de Supabase (installation sans ligne de commande)
+import { readdirSync as rd } from 'node:fs';
+const migDir = join(import.meta.dirname, '..', 'supabase', 'migrations');
+const all = [
+  '-- Byamashop — installation complète (migrations + contenu de démonstration).',
+  '-- À coller UNE SEULE FOIS dans Supabase › SQL Editor sur un projet neuf.',
+  ...rd(migDir).filter((f) => f.endsWith('.sql')).sort().map((f) => `\n-- ===== ${f} =====\n` + readFileSync(join(migDir, f), 'utf8')),
+  '\n-- ===== seed.sql =====\n' + readFileSync(target, 'utf8'),
+].join('\n');
+writeFileSync(join(import.meta.dirname, '..', 'supabase', 'installation-complete.sql'), all);
+console.log('installation-complete.sql généré.');

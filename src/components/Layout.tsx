@@ -4,6 +4,7 @@ import { useCatalog, useCart } from '../hooks/useCatalog';
 import { favoritesStore } from '../lib/cart';
 import { isDemoMode } from '../lib/config';
 import { waLink } from '../lib/whatsapp';
+import { defaultSettings } from '../data/demo/settings';
 import { Icon, WhatsAppIcon } from './Icon';
 import { SearchBox } from './SearchBox';
 import { CartDrawer } from './CartDrawer';
@@ -111,7 +112,8 @@ function Header() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-  const announcement = data?.settings.announcement;
+  // valeur par défaut tant que les réglages chargent : évite un décalage de mise en page
+  const announcement = data ? data.settings.announcement : defaultSettings.announcement;
   return (
     <>
       {isDemoMode && (

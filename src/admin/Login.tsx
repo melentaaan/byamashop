@@ -48,7 +48,7 @@ export function LoginPage({ notAdmin }: { notAdmin?: boolean }) {
     <div className="admin-login">
       <Seo title="Connexion administration" noindex />
       <form className="admin-login-card" onSubmit={submit} noValidate>
-        <img src="/brand/logo.svg" alt="Byamashop" width={531} height={140} className="admin-login-logo" />
+        <img src="/brand/logo.svg" alt="Byamashop" width={478} height={140} className="admin-login-logo" />
         <h1>Espace de gestion</h1>
         <p className="muted">Connectez-vous pour gérer vos produits, commandes et réglages.</p>
         {isDemoMode && (

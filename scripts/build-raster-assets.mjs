@@ -25,7 +25,7 @@ const og = `<div style="width:1200px;height:630px;display:flex;align-items:cente
   <div style="position:absolute;left:0;right:0;bottom:0;height:8px;background:linear-gradient(90deg,#ff6fb5,#c026d3,#7c3aed)"></div>
 </div>`;
 await render(og, 1200, 630, 'og-image.png');
-const icon = (s) => `<div style="width:${s}px;height:${s}px;display:grid;place-items:center;background:#fff"><img src="${svg('brand/mark.svg')}" style="width:${Math.round(s * 0.72)}px"></div>`;
+const icon = (s) => `<div style="width:${s}px;height:${s}px;display:grid;place-items:center;background:#fff7fb"><img src="${svg("brand/mark.svg")}" style="height:${Math.round(s * 0.8)}px"></div>`;
 await render(icon(180), 180, 180, 'apple-touch-icon.png');
 await render(icon(192), 192, 192, 'icon-192.png');
 await render(icon(512), 512, 512, 'icon-512.png');

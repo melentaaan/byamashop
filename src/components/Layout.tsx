@@ -17,7 +17,7 @@ export function Logo({ className, white }: { className?: string; white?: boolean
       className={className}
       src={white ? '/brand/logo-white.svg' : '/brand/logo.svg'}
       alt="Byamashop"
-      width={531}
+      width={478}
       height={140}
     />
   );

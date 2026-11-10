@@ -48,7 +48,7 @@ function Shell({ email, children }: { email: string; children: React.ReactNode }
       <Seo title="Administration" noindex />
       <header className="admin-topbar">
         <button className="icon-btn admin-menu-btn" onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-controls="admin-nav" aria-label="Menu d’administration"><Icon name="menu" /></button>
-        <Link to="/admin" className="admin-brand"><img src="/brand/logo.svg" alt="Byamashop" width={531} height={140} /><span>Gestion</span></Link>
+        <Link to="/admin" className="admin-brand"><img src="/brand/logo.svg" alt="Byamashop" width={478} height={140} /><span>Gestion</span></Link>
         <div className="admin-topbar-actions">
           <a href="/" target="_blank" rel="noopener" className="btn btn--ghost btn--sm"><Icon name="external" size={16} /> <span className="hide-mobile">Voir la boutique</span></a>
         </div>

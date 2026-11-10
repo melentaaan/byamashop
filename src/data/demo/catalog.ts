@@ -6,8 +6,8 @@
  * par de vraies photos. Ils peuvent être supprimés en un clic depuis
  * l'administration (Réglages › Catalogue de démonstration).
  */
-import type { Category, Collection, Product, ProductImage, ProductVariant, ProductWithRelations } from '../../lib/types';
-import { demoId, seededInt } from './ids';
+import type { Category, Collection, Product, ProductImage, ProductVariant, ProductWithRelations } from '../../lib/types.ts';
+import { demoId, seededInt } from './ids.ts';
 
 export const DEMO_TIMESTAMP = '2026-11-01T09:00:00.000Z';
 

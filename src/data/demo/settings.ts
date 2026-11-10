@@ -1,5 +1,5 @@
-import type { DeliveryZone, StoreSettings } from '../../lib/types';
-import { demoId } from './ids';
+import type { DeliveryZone, StoreSettings } from '../../lib/types.ts';
+import { demoId } from './ids.ts';
 
 /**
  * Réglages initiaux. Les coordonnées et frais de livraison proviennent du site d'origine

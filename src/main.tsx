@@ -9,6 +9,15 @@ import './styles/components.css';
 import './styles/layout.css';
 import './styles/pages.css';
 import App from './App';
+import { isDemoMode } from './lib/config';
+
+// Une démonstration (produits fictifs) ne doit pas être indexée par les moteurs de recherche.
+if (isDemoMode) {
+  const meta = document.createElement('meta');
+  meta.name = 'robots';
+  meta.content = 'noindex, nofollow';
+  document.head.appendChild(meta);
+}
 
 window.addEventListener('unhandledrejection', (e) => {
   console.error('[byamashop] erreur non gérée', e.reason);

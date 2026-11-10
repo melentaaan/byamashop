@@ -117,6 +117,8 @@ export interface PaymentMethodSettings {
   /** Numéro marchand / de réception affiché au client */
   account_number: string;
   account_name: string;
+  /** Lien de paiement Wave Business (https://pay.wave.com/…) — Wave uniquement, facultatif */
+  payment_link: string;
   instructions: string;
 }
 

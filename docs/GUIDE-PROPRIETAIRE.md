@@ -95,6 +95,7 @@ Menu **Réglages boutique**. Pensez à **Enregistrer les réglages** en bas.
 - **Contact** : WhatsApp (format `221771234567`), téléphone, e-mail, adresse, horaires, bandeau d’annonce.
 - **Réseaux sociaux** : collez l’adresse complète (`https://instagram.com/...`). Seuls les liens remplis apparaissent.
 - **Paiement** : activez Wave / Orange Money / paiement à la livraison, indiquez **vos numéros de réception** et les instructions. Ces informations sont montrées à la cliente **après** sa commande.
+  - **Lien de paiement Wave Business** (facultatif) : si Wave vous a donné un lien qui commence par `https://pay.wave.com/`, collez-le ici. Après sa commande, la cliente voit un bouton **« Payer avec Wave »** qui ouvre Wave. Attention : le paiement n’est **pas** validé automatiquement. Vérifiez sur votre téléphone, puis marquez la commande comme payée.
 - **Livraison** : chaque zone a ses **frais**, un **délai indicatif** et éventuellement « offerte dès » un montant. Bouton **Enregistrer** sur chaque ligne. Décochez *Active* pour masquer une zone sans la supprimer.
 - **Page d’accueil** : grand titre (mettez des mots entre `*astérisques*` pour les mettre en couleur), texte, image, bannière promotionnelle, texte « À propos », section revendeurs, newsletter.
 - **Informations légales** : raison sociale, forme juridique, NINEA, RCCM… Elles sont insérées automatiquement dans les pages légales.

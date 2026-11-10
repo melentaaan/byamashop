@@ -191,6 +191,7 @@ function ScrollToTop() {
 
 export function StoreLayout() {
   const { data } = useCatalog();
+  const { pathname } = useLocation();
   const wa = data?.settings.whatsapp;
   return (
     <>
@@ -198,7 +199,7 @@ export function StoreLayout() {
       <ScrollToTop />
       <Header />
       <main id="contenu" tabIndex={-1}>
-        <Outlet />
+        <div key={pathname} className="page-enter"><Outlet /></div>
       </main>
       <Footer />
       <BottomBar />

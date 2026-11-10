@@ -122,3 +122,28 @@ test('import CSV de produits', async ({ page }) => {
   await page.goto('/produit/chapelet-bois');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Chapelet en bois');
 });
+
+test('lien de paiement Wave : refus d’un lien invalide, bouton « Payer avec Wave » après commande', async ({ page }) => {
+  await adminLogin(page);
+  await page.goto('/admin/reglages');
+  const field = page.getByLabel('Lien de paiement Wave Business (facultatif)');
+  await field.fill('https://exemple.com/payer');
+  await page.getByTestId('save-settings').click();
+  await expect(page.getByText(/Lien de paiement Wave invalide/)).toBeVisible();
+  await field.fill('https://pay.wave.com/m/M_sn_test123/c/sn/');
+  await page.getByLabel('Numéro de réception').first().fill('77 000 00 00');
+  await page.getByTestId('save-settings').click();
+  await expect(page.getByText('Réglages enregistrés')).toBeVisible();
+
+  await addProduct(page, 'savon-noir-beldi');
+  await page.goto('/commande');
+  await fillCheckout(page);
+  await page.getByTestId('place-order').click();
+  const wave = page.getByTestId('wave-pay-link');
+  await expect(wave).toBeVisible();
+  await expect(wave).toHaveAttribute('href', 'https://pay.wave.com/m/M_sn_test123/c/sn/');
+  await expect(wave).toHaveAttribute('target', '_blank');
+  // le paiement n'est jamais considéré comme reçu sans validation de la boutique
+  await expect(page.getByTestId('payment-status')).not.toHaveText(/Payée/);
+  await expect(page.getByRole('button', { name: /Copier le numéro Wave/ })).toBeVisible();
+});

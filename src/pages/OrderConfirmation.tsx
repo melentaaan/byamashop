@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router';
 import { backend } from '../backend';
+import { CopyButton } from '../components/CopyButton';
 import { Icon, WhatsAppIcon } from '../components/Icon';
 import { Seo } from '../components/Seo';
 import { useCatalog } from '../hooks/useCatalog';
@@ -9,6 +9,7 @@ import { displayPhone, formatDateTime, formatFCFA } from '../lib/format';
 import { DELIVERY_STATUS_LABELS, ORDER_STATUS_LABELS, PAYMENT_METHOD_LABELS, PAYMENT_STATUS_LABELS } from '../lib/labels';
 import type { OrderStatus } from '../lib/types';
 import { waLink } from '../lib/whatsapp';
+import { waveLinkOrNull } from '../lib/payments';
 import { ErrorState, PageLoader } from './states';
 
 const TRACK: OrderStatus[] = ['new', 'confirmed', 'preparing', 'ready', 'completed'];
@@ -18,7 +19,6 @@ export default function OrderConfirmation() {
   const [sp] = useSearchParams();
   const token = sp.get('t') ?? '';
   const { data: catalog } = useCatalog();
-  const [copied, setCopied] = useState(false);
   const q = useQuery({
     queryKey: ['order', reference, token],
     queryFn: () => backend.getOrderStatus(reference, token),
@@ -57,9 +57,7 @@ export default function OrderConfirmation() {
   const cancelled = o.status === 'cancelled';
   const step = TRACK.indexOf(o.status);
   const waText = `Bonjour Byamashop, je viens de passer la commande ${o.reference} d’un montant de ${formatFCFA(o.total)} (${PAYMENT_METHOD_LABELS[o.payment_method]}). Merci !`;
-  const copy = async () => {
-    try { await navigator.clipboard.writeText(o.reference); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch { /* ignore */ }
-  };
+  const waveLink = o.payment_method === 'wave' && pay?.enabled !== false ? waveLinkOrNull(pay?.payment_link) : null;
 
   return (
     <div className="container section--tight order-page">
@@ -71,7 +69,7 @@ export default function OrderConfirmation() {
           <h1>{cancelled ? 'Commande annulée' : `Merci ${o.customer_name.split(' ')[0]}, votre commande est enregistrée`}</h1>
           <p className="lead">
             Référence <strong className="ref" data-testid="order-reference">{o.reference}</strong>
-            <button type="button" className="btn btn--ghost btn--sm" onClick={copy}><Icon name="copy" size={16} /> {copied ? 'Copiée' : 'Copier'}</button>
+            <CopyButton value={o.reference} what="la référence" />
           </p>
           {!cancelled && <p className="muted">Nous vous contactons au {displayPhone(o.customer_phone)} pour confirmer la commande et la livraison. Conservez cette page : son adresse vous permet de suivre l’avancement.</p>}
         </div>
@@ -101,15 +99,23 @@ export default function OrderConfirmation() {
             <section className="summary-card pay-instructions" aria-labelledby="pay-title">
               <h2 id="pay-title">Paiement : {PAYMENT_METHOD_LABELS[o.payment_method]}</h2>
               <p>{pay.instructions}</p>
+              {waveLink && (
+                <div className="wave-pay">
+                  <a className="btn btn--wave btn--lg btn--block" href={waveLink} target="_blank" rel="noopener noreferrer" data-testid="wave-pay-link">
+                    <span className="wave-mark" aria-hidden="true">W</span> Payer {formatFCFA(o.total)} avec Wave
+                  </a>
+                  <p className="small muted">Saisissez le montant de <strong>{formatFCFA(o.total)}</strong> et, si Wave le propose, la référence <strong>{o.reference}</strong>.</p>
+                </div>
+              )}
               {o.payment_method !== 'cash_on_delivery' && (
                 pay.account_number ? (
                   <dl className="pay-details">
-                    <div><dt>Numéro {PAYMENT_METHOD_LABELS[o.payment_method]}</dt><dd><strong>{pay.account_number}</strong></dd></div>
+                    <div><dt>Numéro {PAYMENT_METHOD_LABELS[o.payment_method]}</dt><dd className="pay-copy"><strong>{pay.account_number}</strong><CopyButton value={pay.account_number.replace(/\s+/g, '')} what={`le numéro ${PAYMENT_METHOD_LABELS[o.payment_method]}`} /></dd></div>
                     {pay.account_name && <div><dt>Au nom de</dt><dd>{pay.account_name}</dd></div>}
                     <div><dt>Montant</dt><dd><strong>{formatFCFA(o.total)}</strong></dd></div>
                     <div><dt>Motif / référence</dt><dd><strong>{o.reference}</strong></dd></div>
                   </dl>
-                ) : (
+                ) : waveLink ? null : (
                   <p className="alert"><Icon name="info" /> <span>Le numéro de paiement vous sera communiqué lors de la confirmation de votre commande.</span></p>
                 )
               )}

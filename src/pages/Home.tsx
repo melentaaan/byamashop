@@ -1,7 +1,9 @@
 import { Link } from 'react-router';
 import type { Catalog } from '../backend/types';
 import { Icon, WhatsAppIcon } from '../components/Icon';
-import { ProductCard, ProductGridSkeleton } from '../components/ProductCard';
+import { ProductGridSkeleton } from '../components/ProductCard';
+import { ProductRail } from '../components/ProductRail';
+import { Reveal } from '../components/Reveal';
 import { RichTitle, plainTitle } from '../components/RichTitle';
 import { Seo, absoluteUrl } from '../components/Seo';
 import { NewsletterForm } from '../components/NewsletterForm';
@@ -21,7 +23,7 @@ function Hero({ c }: { c: Catalog }) {
   const methods = enabledPayments(c);
   const featured = c.products.find((p) => p.is_featured && p.variants.some((v) => v.stock > 0));
   return (
-    <section className="hero">
+    <section className="hero hero--enter">
       <div className="container hero-grid">
         <div className="hero-copy">
           {h.eyebrow && <p className="eyebrow">{h.eyebrow}</p>}
@@ -37,6 +39,10 @@ function Hero({ c }: { c: Catalog }) {
           </ul>
         </div>
         <div className="hero-media">
+          <span className="hero-glow" aria-hidden="true" />
+          <span className="sparkle sparkle--1" aria-hidden="true" />
+          <span className="sparkle sparkle--2" aria-hidden="true" />
+          <span className="sparkle sparkle--3" aria-hidden="true" />
           <div className="hero-arch">
             <img src={h.image_url || '/demo/editorial/hero.svg'} alt="" width={1200} height={1400} fetchPriority="high" />
           </div>
@@ -56,22 +62,38 @@ function Hero({ c }: { c: Catalog }) {
   );
 }
 
+/** Bandeau défilant décoratif (les catégories elles-mêmes sont listées juste en dessous). */
+function Marquee({ c }: { c: Catalog }) {
+  const words = c.categories.map((x) => x.name);
+  if (words.length < 3) return null;
+  const run = (k: string) => (
+    <span className="marquee-run" key={k}>
+      {words.map((w) => <span key={w} className="marquee-item">{w}<span className="marquee-star">✦</span></span>)}
+    </span>
+  );
+  return (
+    <div className="marquee" aria-hidden="true">
+      <div className="marquee-track">{run('a')}{run('b')}</div>
+    </div>
+  );
+}
+
 function Categories({ c }: { c: Catalog }) {
   return (
     <section className="section section--tight" aria-labelledby="cats-title">
       <div className="container">
-        <div className="section-head">
+        <Reveal className="section-head">
           <div>
             <p className="eyebrow">Nos univers</p>
             <h2 id="cats-title">Parcourir par catégorie</h2>
           </div>
           <Link to="/boutique" className="link-arrow">Toute la boutique <Icon name="arrow-right" /></Link>
-        </div>
+        </Reveal>
         <ul className="category-rail">
-          {c.categories.map((cat) => {
+          {c.categories.map((cat, i) => {
             const n = c.products.filter((p) => p.category_id === cat.id).length;
             return (
-              <li key={cat.id}>
+              <Reveal as="li" key={cat.id} delay={(i % 4) * 70}>
                 <Link to={`/categorie/${cat.slug}`} className="category-card">
                   <span className="category-media">
                     {cat.image_url ? <img src={cat.image_url} alt="" width={800} height={1000} loading="lazy" /> : <img src="/brand/mark.svg" alt="" />}
@@ -79,7 +101,7 @@ function Categories({ c }: { c: Catalog }) {
                   <span className="category-name">{cat.name}</span>
                   <span className="category-count">{n} article{n > 1 ? 's' : ''}</span>
                 </Link>
-              </li>
+              </Reveal>
             );
           })}
         </ul>
@@ -93,16 +115,14 @@ function ProductRow({ c, title, eyebrow, products, link, id, tint }: { c: Catalo
   return (
     <section className={`section ${tint ? 'section--tint' : ''}`} aria-labelledby={id}>
       <div className="container">
-        <div className="section-head">
+        <Reveal className="section-head">
           <div>
             <p className="eyebrow">{eyebrow}</p>
             <h2 id={id}>{title}</h2>
           </div>
           <Link to={link.to} className="link-arrow">{link.label} <Icon name="arrow-right" /></Link>
-        </div>
-        <div className="product-grid product-grid--scroll-mobile">
-          {products.map((p) => <ProductCard key={p.id} product={p} catalog={c} />)}
-        </div>
+        </Reveal>
+        <Reveal><ProductRail products={products} catalog={c} label={title} /></Reveal>
       </div>
     </section>
   );
@@ -114,15 +134,16 @@ function Collections({ c }: { c: Catalog }) {
   return (
     <section className="section" aria-labelledby="col-title">
       <div className="container">
-        <div className="section-head">
+        <Reveal className="section-head">
           <div>
             <p className="eyebrow">Sélections</p>
             <h2 id="col-title">Nos collections du moment</h2>
           </div>
-        </div>
+        </Reveal>
         <div className="collection-grid">
           {cols.slice(0, 3).map((col, i) => (
-            <Link key={col.id} to={`/collections/${col.slug}`} className={`collection-card ${i === 0 ? 'collection-card--lead' : ''}`}>
+            <Reveal key={col.id} className={`collection-cell ${i === 0 ? 'collection-cell--lead' : ''}`} delay={i * 90}>
+            <Link to={`/collections/${col.slug}`} className={`collection-card ${i === 0 ? 'collection-card--lead' : ''}`}>
               <img src={col.image_url ?? '/demo/editorial/story.svg'} alt="" width={800} height={1000} loading="lazy" />
               <span className="collection-copy">
                 <span className="collection-count">{col.product_ids.length} articles</span>
@@ -131,6 +152,7 @@ function Collections({ c }: { c: Catalog }) {
                 <span className="link-arrow on-dark">Découvrir <Icon name="arrow-right" /></span>
               </span>
             </Link>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -146,7 +168,7 @@ function Banners({ c }: { c: Catalog }) {
       {banners.map((b) => (
         <section key={b.id} className="promo-band" aria-label={b.title}>
           <div className="container">
-            <div className="promo-inner">
+            <Reveal className="promo-inner">
               {b.image_url && <img className="promo-img" src={b.image_url} alt="" width={1600} height={900} loading="lazy" />}
               <div className="promo-copy">
                 {b.eyebrow && <p className="eyebrow">{b.eyebrow}</p>}
@@ -154,7 +176,7 @@ function Banners({ c }: { c: Catalog }) {
                 {b.text && <p>{b.text}</p>}
                 {b.cta_href && <Link to={b.cta_href} className="btn btn--primary">{b.cta_label || 'Découvrir'} <Icon name="arrow-right" size={18} /></Link>}
               </div>
-            </div>
+            </Reveal>
           </div>
         </section>
       ))}
@@ -167,15 +189,15 @@ function Story({ c }: { c: Catalog }) {
   return (
     <section className="section section--blush" aria-labelledby="story-title">
       <div className="container story">
-        <div className="story-media">
+        <Reveal className="story-media">
           <img src="/demo/editorial/story.svg" alt="" width={800} height={1000} loading="lazy" />
-        </div>
-        <div className="story-copy">
+        </Reveal>
+        <Reveal className="story-copy" delay={120}>
           <p className="eyebrow">Notre maison</p>
           <h2 id="story-title">Une boutique sénégalaise, <em className="accent-italic">pensée pour vous</em></h2>
           {paragraphs.slice(0, 2).map((p, i) => <p key={i}>{p}</p>)}
           <Link to="/a-propos" className="link-arrow">Lire notre histoire <Icon name="arrow-right" /></Link>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -189,23 +211,23 @@ function ServiceStrip({ c }: { c: Catalog }) {
   return (
     <section className="section section--tight" aria-label="Livraison, paiement et assistance">
       <div className="container service-grid">
-        <div className="service">
+        <Reveal className="service" delay={0}>
           <span className="service-icon"><Icon name="truck" /></span>
           <h3>Livraison au Sénégal</h3>
           <p>{minFee != null ? <>À partir de {formatFCFA(minFee)} selon votre zone</> : 'Selon votre zone'}{pickup ? ', ou retrait sur place' : ''}. Les frais s’affichent avant validation.</p>
           <Link to="/livraison" className="text-link">Zones et tarifs</Link>
-        </div>
-        <div className="service">
+        </Reveal>
+        <Reveal className="service" delay={90}>
           <span className="service-icon"><Icon name="wallet" /></span>
           <h3>Paiement simple</h3>
           <p>{methods.map((m) => PAYMENT_METHOD_LABELS[m]).join(', ')}. Votre paiement est confirmé par notre équipe, sans frais cachés.</p>
-        </div>
-        <div className="service">
+        </Reveal>
+        <Reveal className="service" delay={180}>
           <span className="service-icon"><Icon name="chat" /></span>
           <h3>Un conseil ?</h3>
           <p>Taille, couleur, disponibilité : écrivez-nous, nous vous répondons personnellement.</p>
           {c.settings.whatsapp && <a className="text-link" href={waLink(c.settings.whatsapp, 'Bonjour Byamashop, j’ai une question.')} target="_blank" rel="noopener noreferrer">Écrire sur WhatsApp</a>}
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -216,7 +238,7 @@ function Wholesale({ c }: { c: Catalog }) {
   if (!w.enabled) return null;
   return (
     <section className="wholesale-band" aria-labelledby="ws-title">
-      <div className="container wholesale-inner">
+      <Reveal className="container wholesale-inner">
         <img src="/demo/editorial/wholesale.svg" alt="" width={1600} height={900} loading="lazy" className="wholesale-img" />
         <div className="wholesale-copy">
           <p className="eyebrow eyebrow--light">Professionnels</p>
@@ -231,7 +253,7 @@ function Wholesale({ c }: { c: Catalog }) {
             )}
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }
@@ -260,6 +282,7 @@ export default function Home() {
     <>
       <Seo path="/" description={`${plainTitle(c.settings.hero.title)}. ${c.settings.hero.subtitle}`.slice(0, 300)} jsonLd={org} />
       <Hero c={c} />
+      <Marquee c={c} />
       <Categories c={c} />
       <ProductRow c={c} id="sel-title" eyebrow="Notre sélection" title="Les pièces que nous aimons" products={featured} link={{ to: '/boutique', label: 'Tout voir' }} tint />
       <Collections c={c} />
@@ -270,12 +293,12 @@ export default function Home() {
       <Wholesale c={c} />
       {c.settings.newsletter_enabled && (
         <section className="section section--tight newsletter-section" aria-labelledby="nl-title">
-          <div className="container--narrow newsletter-box">
+          <Reveal className="container--narrow newsletter-box">
             <p className="eyebrow">Newsletter</p>
             <h2 id="nl-title">Soyez la première informée</h2>
             <p className="muted">Arrivages, collections et offres : un e-mail de temps en temps, jamais plus.</p>
             <NewsletterForm />
-          </div>
+          </Reveal>
         </section>
       )}
     </>

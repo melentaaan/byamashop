@@ -1,6 +1,6 @@
 # Verification report
 
-Environment: Linux build container, Node 22, PostgreSQL 16.15 (local), Chromium (Playwright 1.63). Date: 8 November 2026.
+Environment: Linux build container, Node 22, PostgreSQL 16.15 (local), Chromium (Playwright 1.63). Date: 8 November 2026, updated 10 November 2026.
 Every result below was **actually executed** in this environment. Anything not executed is listed in §4 and §5.
 
 ## 1. Automated tests: results
@@ -8,9 +8,9 @@ Every result below was **actually executed** in this environment. Anything not e
 | Suite | Command | Result |
 |---|---|---|
 | Type-check + production build | `npm run build` | ✅ passes |
-| Unit tests (Vitest) | `npm test` | ✅ **30 / 30** |
+| Unit tests (Vitest) | `npm test` | ✅ **33 / 33** |
 | Database tests on real PostgreSQL 16 | `npm run test:db` | ✅ **23 / 23** |
-| End-to-end browser tests (Playwright, desktop 1366 px + Pixel 7) | `npx playwright test` | ✅ **36 / 36** |
+| End-to-end browser tests (Playwright, desktop 1366 px + Pixel 7) | `npx playwright test` | ✅ **37 / 37** |
 | Accessibility (axe-core, WCAG 2 A/AA, serious and critical violations) on 7 pages × 2 viewports | included above | ✅ 0 violations |
 
 ### Coverage of the 15 required workflows
@@ -42,6 +42,7 @@ Every result below was **actually executed** in this environment. Anything not e
 - Legal pages with placeholders
 - Open Graph injection and sitemap
 - Wave webhook signature verification
+- Wave Business payment link: invalid links refused in admin; "Payer avec Wave" button shown after a Wave order; the order stays "payment pending" (e2e + unit)
 - Provider payment confirmation (server-only, checks the amount, idempotent)
 
 ## 2. What the database tests prove
@@ -75,6 +76,8 @@ The tests in `tests/db/` load the real migrations and seed into PostgreSQL 16. A
 | `/` | 90 | 100 | 100 | 100 | 92 | 0 / 0.015 | 3.1 s |
 | `/boutique` | 88 | 100 | 99 | 100 | 92 | 0.05 / 0.02 | 3.4 s |
 | `/produit/…` | 90 | 100 | 100 | 100 | 92 | 0 / 0.001 | 3.2 s |
+
+*These Lighthouse scores were measured before the 10 November visual update (animations, carousels), which was not re-measured with Lighthouse. Layout shift was re-checked after it with a browser script: CLS ≤ 0.007 on `/`, `/boutique` and a product page, desktop and mobile.*
 
 *The `/boutique` row was measured **before** the final layout-shift fix (the announcement bar appearing after load). It was not re-measured; `/` and `/produit/…` were.*
 

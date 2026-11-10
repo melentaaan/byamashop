@@ -1,3 +1,4 @@
+import { normalizeWaveLink } from '../lib/payments';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { backend } from '../backend';
@@ -36,7 +37,9 @@ function StoreForm({ initial }: { initial: StoreSettings }) {
       if (wa && !/^\d{8,15}$/.test(wa)) throw new ShopError('VALIDATION', 'Numéro WhatsApp invalide : format international sans + (ex. 221771234567).');
       for (const [k, url] of Object.entries(s.socials)) if (url && !/^https:\/\//.test(url)) throw new ShopError('VALIDATION', `Le lien ${k} doit commencer par https://`);
       if (!Object.values(s.payments).some((p) => p.enabled)) throw new ShopError('VALIDATION', 'Activez au moins un moyen de paiement.');
-      return backend.admin.saveSettings({ ...s, whatsapp: wa });
+      const waveLink = normalizeWaveLink(s.payments.wave.payment_link);
+      if (waveLink === null) throw new ShopError('VALIDATION', 'Lien de paiement Wave invalide : copiez le lien fourni par Wave Business (il commence par https://pay.wave.com/).');
+      return backend.admin.saveSettings({ ...s, whatsapp: wa, payments: { ...s.payments, wave: { ...s.payments.wave, payment_link: waveLink } } });
     },
     onSuccess: () => { invalidate(); toast('Réglages enregistrés'); },
     onError: (e) => toast(e instanceof ShopError ? e.message : 'Enregistrement impossible', { tone: 'error' }),
@@ -82,6 +85,7 @@ function StoreForm({ initial }: { initial: StoreSettings }) {
               <div className="form-grid form-grid--2">
                 {m !== 'cash_on_delivery' && <Text id={`p-${m}-n`} label="Numéro de réception" value={s.payments[m].account_number} onChange={(v) => pay(m, { account_number: v })} hint="Affiché au client après sa commande." />}
                 {m !== 'cash_on_delivery' && <Text id={`p-${m}-a`} label="Au nom de" value={s.payments[m].account_name} onChange={(v) => pay(m, { account_name: v })} />}
+                {m === 'wave' && <div className="span-2"><Text id="p-wave-link" label="Lien de paiement Wave Business (facultatif)" type="url" placeholder="https://pay.wave.com/m/…" value={s.payments.wave.payment_link} onChange={(v) => pay('wave', { payment_link: v })} hint="Si vous en avez un, les clientes voient un bouton « Payer avec Wave » après leur commande. Le paiement reste à vérifier puis à marquer payé par vous." /></div>}
                 <div className="span-2"><Text id={`p-${m}-i`} label="Instructions au client" multiline value={s.payments[m].instructions} onChange={(v) => pay(m, { instructions: v })} /></div>
               </div>
             )}

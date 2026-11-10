@@ -20,6 +20,7 @@ export const defaultSettings: StoreSettings = {
       enabled: true,
       account_number: '',
       account_name: '',
+      payment_link: '',
       instructions:
         "Envoyez le montant total par Wave en indiquant votre référence de commande. Votre paiement est validé dès que nous l'avons vérifié — vous recevez alors une confirmation.",
     },
@@ -27,6 +28,7 @@ export const defaultSettings: StoreSettings = {
       enabled: true,
       account_number: '',
       account_name: '',
+      payment_link: '',
       instructions:
         "Envoyez le montant total par Orange Money en indiquant votre référence de commande. Votre paiement est validé dès que nous l'avons vérifié — vous recevez alors une confirmation.",
     },
@@ -34,6 +36,7 @@ export const defaultSettings: StoreSettings = {
       enabled: true,
       account_number: '',
       account_name: '',
+      payment_link: '',
       instructions: 'Vous réglez en espèces au moment de la livraison. Merci de préparer le montant exact si possible.',
     },
   },
@@ -48,13 +51,13 @@ export const defaultSettings: StoreSettings = {
   },
   banners: [
     {
-      id: 'banner-cadeaux',
+      id: 'banner-parfums',
       enabled: true,
-      eyebrow: 'Collection',
-      title: 'Idées cadeaux',
-      text: 'Coffrets parfums, tapis et chapelets, douceurs du Maroc : de quoi faire plaisir à chaque occasion.',
-      cta_label: 'Voir les idées cadeaux',
-      cta_href: '/collections/idees-cadeaux',
+      eyebrow: 'L’univers parfum',
+      title: 'Ouds, muscs & eaux de parfum',
+      text: 'Des notes boisées, ambrées ou florales, en flacon, en huile ou en coffret à offrir.',
+      cta_label: 'Découvrir les parfums',
+      cta_href: '/categorie/parfums',
       image_url: '/demo/editorial/promo.svg',
     },
   ],
